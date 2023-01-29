@@ -23,7 +23,7 @@ Plan: import input file, grab barcode & quantity, output that to an output file.
 import os
 
 # Read the input file
-inputfile= open ("barcodes.txt", 'r')
+inputfile= open ("scanpal.txt", 'r')
 
 # The lines variable holds the lines from the input file
 lines = inputfile.readlines()
