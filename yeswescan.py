@@ -42,6 +42,8 @@ for row in reader:
 
 sys.exit() 
 
+"""
+Preliminary code below here 
 # Do something to each line
 for line in lines:
     if len(line) == 14:
@@ -52,3 +54,4 @@ for line in lines:
         print(line, end = "") 
         print(line[14:], end = "")
         print("---")
+""" 
