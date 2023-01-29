@@ -7,12 +7,15 @@ https://learn.microsoft.com/en-us/windows/python/beginners
 
 https://www.python.org/downloads/windows/
 
-Sample Scanpal file:
+## Sample input file
+
+### Pretend header: a,b,isbn,qty,c,d,e,f
  
-,,978044020133550495,1,123456,222,04.95,
+a,b,isbn,qty,c,d,e,f
+,,9780671656607,,123456,222,6.60,
 ,,9780671656607,1,123456,222,6.60,
-,,9780449222713,1,123456,222,5.99,
-,,978042520581550799,1,123456,222,07.99,
+,,9780449222713,37,123456,222,5.99,
+,,9780459222714,314,123456,222,5.99,
 
 Beth only wants the barcode and the quantity (the number right after the first long barcode, which is either 13 characters or...
 
@@ -21,12 +24,17 @@ Plan: import input file, grab barcode & quantity, output that to an output file.
 """
 
 import os
+import csv
 
 # Read the input file
-inputfile= open ("scanpal.txt", 'r')
+csvfile = open ("scinput.txt", 'r')
 
 # The lines variable holds the lines from the input file
-lines = inputfile.readlines()
+# lines = inputfile.readlines()
+reader = csv.DictReader(csvfile)
+
+for row in reader
+	print
 
 # Do something to each line
 for line in lines:
