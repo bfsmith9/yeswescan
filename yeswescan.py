@@ -24,17 +24,23 @@ Plan: import input file, grab barcode & quantity, output that to an output file.
 """
 
 import os
+import sys
 import csv
+inputfile = "scinput.txt"
+outputfile = "scoutput.txt"
 
 # Read the input file
-csvfile = open ("scinput.txt", 'r')
+csvfile = open (inputfile, 'r')
 
 # The lines variable holds the lines from the input file
 # lines = inputfile.readlines()
 reader = csv.DictReader(csvfile)
 
-for row in reader
-	print
+for row in reader:
+	print(row['isbn'], row['qty'])
+
+
+sys.exit() 
 
 # Do something to each line
 for line in lines:
