@@ -6,26 +6,20 @@
 - After the output of one without any number, put a "1" for the quantity. 
 
 ## Sample input file
-9780671656607
-
-9780449222713
-
-42
-
-9780449222719
+9780671656607  
+9780449222713  
+42  
+9780449222719  
 
 ## Sample output file
 ### Header
 Unused field,Sequence,Barcode,Quantity,Dept/Cat,User,Price,Area,Field
- 
-Unused field,Sequence,Barcode,Quantity,Dept/Cat,User,Price,Area,Field
 
-,,9780671656607,,123456,222,6.60,
-
-,,9780671656607,1,123456,222,6.60,
-
-,,9780449222713,37,123456,222,5.99,
-
+### Output complete
+Unused field,Sequence,Barcode,Quantity,Dept/Cat,User,Price,Area,Field  
+,,9780671656607,,123456,222,6.60,  
+,,9780671656607,1,123456,222,6.60,  
+,,9780449222713,37,123456,222,5.99,  
 ,,9780459222714,314,123456,222,5.99,
 
 - Quantity is always 1-3 characters, no more
