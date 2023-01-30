@@ -8,7 +8,12 @@ https://learn.microsoft.com/en-us/windows/python/beginners
 https://www.python.org/downloads/windows/
 
 ## Sample input file
+9780671656607
+9780449222713
+42
+9780449222719
 
+## Sample output file
 ### Pretend header: a,b,isbn,qty,c,d,e,f
  
 a,b,isbn,qty,c,d,e,f
@@ -17,9 +22,17 @@ a,b,isbn,qty,c,d,e,f
 ,,9780449222713,37,123456,222,5.99,
 ,,9780459222714,314,123456,222,5.99,
 
-Beth only wants the barcode and the quantity (the number right after the first long barcode, which is either 13 characters or...
+- Quantity is always 1-3 characters, no more
+- Barcode is always longer
+- If there's no quantity, put a "1"
 
-Plan: import input file, grab barcode & quantity, output that to an output file.
+## Algorithm 
+- import input file
+- output a header to the output file 
+- Read a line
+- If line > 3, save to isbn variable
+- If next line <= 3, it's a quantity. Save it to found_qty variable., and output the isbn and the found_qty to the output file in the expected .csv format
+- Else, output the isbn variable and the default_qty variable (1) to the output file in the expected .csv file
 
 """
 
