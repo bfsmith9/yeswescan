@@ -38,9 +38,29 @@ a,b,isbn,qty,c,d,e,f
 
 import os
 import sys
-import csv
-inputfile = "scinput.txt"
+# import csv
+# inputfile = "scinput.txt"
 outputfile = "scoutput.txt"
+
+inputfile = open("scinput.txt")
+
+# Read the input file
+lines = inputfile.readlines()
+#csvfile = open (inputfile, 'w')
+
+for line in lines:
+    if len(line) > 3:
+        print(line, end = "")
+        print("---")
+    else:
+        print("this one is shorter")
+        print(line, end = "") 
+        # print(line, end = "")
+        print("---")
+
+# The lines variable holds the lines from the input file
+
+sys.exit() 
 
 # Read the input file
 csvfile = open (inputfile, 'r')
@@ -52,8 +72,6 @@ reader = csv.DictReader(csvfile)
 for row in reader:
 	print(row['isbn'], row['qty'])
 
-
-sys.exit() 
 
 """
 Preliminary code below here 
@@ -67,4 +85,13 @@ for line in lines:
         print(line, end = "") 
         print(line[14:], end = "")
         print("---")
+        
+        
+---
+reader = csv.DictReader(csvfile)
+
+for row in reader:
+	print(row['isbn'], row['qty'])
+        
+        
 """ 
