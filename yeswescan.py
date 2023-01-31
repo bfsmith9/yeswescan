@@ -34,13 +34,16 @@ a,b,isbn,qty,c,d,e,f
 - If next line <= 3, it's a quantity. Save it to found_qty variable., and output the isbn and the found_qty to the output file in the expected .csv format
 - Else, output the isbn variable and the default_qty variable (1) to the output file in the expected .csv file
 
+## NOTES
+- Python's (len) can include the newline character
+
 """
 
 import os
 import sys
 # import csv
 # inputfile = "scinput.txt"
-outputfile = "scoutput.txt"
+outputfile = open("scoutput.txt", 'w')
 
 inputfile = open("scinput.txt")
 
@@ -49,9 +52,10 @@ lines = inputfile.readlines()
 #csvfile = open (inputfile, 'w')
 
 for line in lines:
-    if len(line) > 3:
+    if len(line) > 4:
         print(line, end = "")
         print("---")
+        outputfile.write(line)
     else:
         print("this one is shorter")
         print(line, end = "") 
