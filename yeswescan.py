@@ -36,6 +36,8 @@ a,b,isbn,qty,c,d,e,f
 
 ## NOTES
 - Python's (len) can include the newline character
+- Working so far, but have to add a 1 on the end if the last 
+string isn't a qty (if it's an ISBN)
 
 """
 
@@ -43,27 +45,57 @@ import os
 import sys
 # import csv
 # inputfile = "scinput.txt"
-outputfile = open("scoutput.txt", 'w')
+
+isbnholder = "initial"
+isbnholder_nextline = "initial"
+default_qty = "1"
+isbnflag = 0
+qtyflag = 0
 
 inputfile = open("scinput.txt")
+outputfile = open("scoutput.txt", 'w')
 
 # Read the input file
 lines = inputfile.readlines()
 #csvfile = open (inputfile, 'w')
 
 for line in lines:
-    if len(line) > 4:
-        print(line, end = "")
-        print("---")
-        outputfile.write(line)
-    else:
-        print("this one is shorter")
-        print(line, end = "") 
+	
+    if len(line) > 4 and isbnflag == 0:
+        qtyflag = 0
+        isbnflag = isbnflag + 1
+        isbnholder = line.rstrip()
+        # print(line, end = "")
+        # print("---")
+        continue
+        
+    if len(line) > 4 and isbnflag > 0:
+        if qtyflag == 1:
+            isbnholder = line.strip()
+            qtyflag = 0
+        isbnflag = isbnflag + 1
+        isbnholder2 = line.rstrip()
+        # print(line, end = "")
+        # print("---")
+        outputfile.write(isbnholder + "," + default_qty + "\n")
+        isbnholder = isbnholder2
+        # outputfile.write(isbnholder2 + "," + default_qty)
+                
+    if len(line) <= 4:
+        # print("this one is shorter")
+        isbnflag = 0
+        qty = line
+        qtyflag = 1
+        # print(line, end = "") 
+        outputfile.write(isbnholder.rstrip() + "," + qty)
+
         # print(line, end = "")
         print("---")
 
 # The lines variable holds the lines from the input file
 
+inputfile.close()
+outputfile.close()
 sys.exit() 
 
 # Read the input file
