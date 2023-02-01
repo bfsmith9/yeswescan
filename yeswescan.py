@@ -37,7 +37,8 @@ a,b,isbn,qty,c,d,e,f
 ## NOTES
 - Python's (len) can include the newline character
 - Working so far, but have to add a 1 on the end if the last 
-string isn't a qty (if it's an ISBN)
+string isn't a qty (if it's an ISBN). 
+    - OK - fixed
 
 """
 
@@ -51,6 +52,24 @@ isbnholder_nextline = "initial"
 default_qty = "1"
 isbnflag = 0
 qtyflag = 0
+last_line_flag = 0
+last_line_count = 0
+process_count = 0
+
+
+# Read the last line of input file
+with open("scinput.txt") as f:
+    for line in f:
+        last_line_count = last_line_count + 1
+        pass
+    last_line = line
+    the_last_line_number = last_line_count
+
+if len(last_line) > 4:
+    last_line_flag = 1
+
+f.close()
+
 
 inputfile = open("scinput.txt")
 outputfile = open("scoutput.txt", 'w')
@@ -60,6 +79,7 @@ lines = inputfile.readlines()
 #csvfile = open (inputfile, 'w')
 
 for line in lines:
+    process_count = process_count + 1
 	
     if len(line) > 4 and isbnflag == 0:
         qtyflag = 0
@@ -91,6 +111,9 @@ for line in lines:
 
         # print(line, end = "")
         print("---")
+
+    if len(line) > 4 and last_line_flag > 0 and process_count == last_line_count:
+        outputfile.write(line + "," + default_qty )
 
 # The lines variable holds the lines from the input file
 
