@@ -40,6 +40,9 @@ a,b,isbn,qty,c,d,e,f
 string isn't a qty (if it's an ISBN). 
     - OK - fixed
 
+2/1/2023
+- They want Dept/Cat & User as well, which are the fields directly after QTY, respectively. After that there are two more fields we won't fill in, "Price" & "Area", so just two more commas added to the end.
+
 """
 
 import os
@@ -55,6 +58,8 @@ qtyflag = 0
 last_line_flag = 0
 last_line_count = 0
 process_count = 0
+dept = "default_dept"
+user = "jane_doe"
 
 
 # Read the last line of input file
@@ -97,7 +102,8 @@ for line in lines:
         isbnholder2 = line.rstrip()
         # print(line, end = "")
         # print("---")
-        outputfile.write(isbnholder + "," + default_qty + "\n")
+        outputfile.write(",," + isbnholder + "," + default_qty 
+        +  "," + dept + "," + user + ",,\n")
         isbnholder = isbnholder2
         # outputfile.write(isbnholder2 + "," + default_qty)
                 
@@ -107,13 +113,15 @@ for line in lines:
         qty = line
         qtyflag = 1
         # print(line, end = "") 
-        outputfile.write(isbnholder.rstrip() + "," + qty)
+        outputfile.write(",," + isbnholder.rstrip() + "," + qty.rstrip() 
+        +  "," + dept + "," + user + ",,\n")
 
         # print(line, end = "")
         print("---")
 
     if len(line) > 4 and last_line_flag > 0 and process_count == last_line_count:
-        outputfile.write(line + "," + default_qty )
+        outputfile.write(",," + line + "," + default_qty 
+        +  "," + dept + "," + user + ",,\n")
 
 # The lines variable holds the lines from the input file
 
