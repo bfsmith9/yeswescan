@@ -47,8 +47,7 @@ string isn't a qty (if it's an ISBN).
 
 import os
 import sys
-
-
+import glob 
 import tkinter as tk
 from tkinter import simpledialog
 
@@ -76,6 +75,12 @@ print("Hello", dept)
 # import csv
 # inputfile = "scinput.txt"
 
+
+inputfilearray = glob.glob('*/*.txt', recursive=True)
+
+result = inputfilearray[0]
+
+
 isbnholder = "initial"
 isbnholder_nextline = "initial"
 default_qty = "1"
@@ -88,7 +93,7 @@ process_count = 0
 
 
 # Read the last line of input file
-with open("scinput.txt") as f:
+with open(str(result)) as f:
     for line in f:
         last_line_count = last_line_count + 1
         pass
@@ -101,7 +106,7 @@ if len(last_line) > 4:
 f.close()
 
 
-inputfile = open("scinput.txt")
+inputfile = open(result)
 outputfile = open("scoutput.txt", 'w')
 
 # Read the input file
