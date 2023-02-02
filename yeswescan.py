@@ -50,37 +50,43 @@ import sys
 import glob 
 import tkinter as tk
 from tkinter import simpledialog
+# import csv
 
+
+# Default dept, user 
 dept = "default_dept"
 user = "jane_doe"
 
+# GUI section
 ROOT = tk.Tk()
-
 ROOT.withdraw()
-# the input dialog
+
+# input dialog - get user name
 user = simpledialog.askstring(title="User",
                                   prompt="What's your Name?:")
 
 # check it out
-print("Hello", user)
+# print("Hello", user)
 
+# input dialog - get dept name
 dept = simpledialog.askstring(title="Dept",
                                   prompt="What's your Dept?:")
-                                  
-   
+  
 # check it out
-print("Hello", dept)   
+# print("Hello", dept)   
 
+# End GUI section 
 
-# import csv
-# inputfile = "scinput.txt"
+# Find the input file. It has to be in *one directory/folder* 
+# below the current one, and has to have a .txt suffix 
 
-
+# Array that holds the input file
 inputfilearray = glob.glob('*/*.txt', recursive=True)
 
-result = inputfilearray[0]
+# Grab the input file from the array it's in
+theInputFile = inputfilearray[0]
 
-
+# More setup variables 
 isbnholder = "initial"
 isbnholder_nextline = "initial"
 default_qty = "1"
@@ -90,10 +96,11 @@ last_line_flag = 0
 last_line_count = 0
 process_count = 0
 
-
-
-# Read the last line of input file
-with open(str(result)) as f:
+# Read the last line of input file. If it's an ISBN, 
+# we need to give it a qty, because we're always reading
+# one below ISBNs to find any potential quantities there.
+# Of course, that qty will be 1. 
+with open(str(theInputFile)) as f:
     for line in f:
         last_line_count = last_line_count + 1
         pass
@@ -105,13 +112,14 @@ if len(last_line) > 4:
 
 f.close()
 
+# Open both the input file (again) and the output file 
+inputHandle = open(theInputFile)
+outputHandle = open("scoutput.txt", 'w')
 
-inputfile = open(result)
-outputfile = open("scoutput.txt", 'w')
-
-# Read the input file
-lines = inputfile.readlines()
-#csvfile = open (inputfile, 'w')
+# Read the input file. 
+# The lines variable holds the lines from the input file
+lines = inputHandle.readlines()
+#csvfile = open (inputHandle, 'w')
 
 for line in lines:
     process_count = process_count + 1
@@ -132,10 +140,10 @@ for line in lines:
         isbnholder2 = line.rstrip()
         # print(line, end = "")
         # print("---")
-        outputfile.write(",," + isbnholder + "," + default_qty 
+        outputHandle.write(",," + isbnholder + "," + default_qty 
         +  "," + dept + "," + user + ",,\n")
         isbnholder = isbnholder2
-        # outputfile.write(isbnholder2 + "," + default_qty)
+        # outputHandle.write(isbnholder2 + "," + default_qty)
                 
     if len(line) <= 4:
         # print("this one is shorter")
@@ -143,34 +151,34 @@ for line in lines:
         qty = line
         qtyflag = 1
         # print(line, end = "") 
-        outputfile.write(",," + isbnholder.rstrip() + "," + qty.rstrip() 
+        outputHandle.write(",," + isbnholder.rstrip() + "," + qty.rstrip() 
         +  "," + dept + "," + user + ",,\n")
 
         # print(line, end = "")
-        print("---")
+        # print("---")
 
     if len(line) > 4 and last_line_flag > 0 and process_count == last_line_count:
-        outputfile.write(",," + line + "," + default_qty 
+        outputHandle.write(",," + line + "," + default_qty 
         +  "," + dept + "," + user + ",,\n")
 
-# The lines variable holds the lines from the input file
+inputHandle.close()
+outputHandle.close()
 
-inputfile.close()
-outputfile.close()
-sys.exit() 
+# Exit program 
+# sys.exit() 
 
-# Read the input file
-csvfile = open (inputfile, 'r')
+"""
+# Old CSV code we're not using 
+csvfile = open (inputHandle, 'r')
 
-# The lines variable holds the lines from the input file
-# lines = inputfile.readlines()
+# lines = inputHandle.readlines()
 reader = csv.DictReader(csvfile)
 
 for row in reader:
 	print(row['isbn'], row['qty'])
 
-
-"""
+-----------------------
+Other old code.......................
 Preliminary code below here 
 # Do something to each line
 for line in lines:
