@@ -47,6 +47,32 @@ string isn't a qty (if it's an ISBN).
 
 import os
 import sys
+
+
+import tkinter as tk
+from tkinter import simpledialog
+
+dept = "default_dept"
+user = "jane_doe"
+
+ROOT = tk.Tk()
+
+ROOT.withdraw()
+# the input dialog
+user = simpledialog.askstring(title="User",
+                                  prompt="What's your Name?:")
+
+# check it out
+print("Hello", user)
+
+dept = simpledialog.askstring(title="Dept",
+                                  prompt="What's your Dept?:")
+                                  
+   
+# check it out
+print("Hello", dept)   
+
+
 # import csv
 # inputfile = "scinput.txt"
 
@@ -58,8 +84,7 @@ qtyflag = 0
 last_line_flag = 0
 last_line_count = 0
 process_count = 0
-dept = "default_dept"
-user = "jane_doe"
+
 
 
 # Read the last line of input file
