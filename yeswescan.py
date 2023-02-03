@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 """
-yeswecan! 
+yeswescan! 
 Barry Smith February 2023 
 
 ## Installing Python on Windows (choose Python 3 - more modern)
@@ -44,6 +44,8 @@ Unused Field, Sequence, Barcode, Quantity, Dept/Cat, User, Price, Area,
 
 ## NOTES
 - Python's (len) can include the newline character
+- The input file has to be in *one directory/folder* below the current one, and has to have a .txt suffix 
+- The output file is called 'scoutput.txt,' and it is sent to the same level as the program. 
 
 2/1/2023
 - Customer wants Dept/Cat & User as well, which are the fields directly after QTY, respectively. After that there are two more fields we won't fill in, "Price" & "Area", so just two more commas added to the end.
