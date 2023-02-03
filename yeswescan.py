@@ -14,7 +14,8 @@ https://www.python.org/downloads/windows/
 9780449222719
 
 ## Sample output file
-### Pretend header: a,b,isbn,qty,c,d,e,f
+### Header
+Unused Field, Sequence, Barcode, Quantity, Dept/Cat, User, Price, Area,
  
 a,b,isbn,qty,c,d,e,f
 ,,9780671656607,,123456,222,6.60,
@@ -87,6 +88,7 @@ inputfilearray = glob.glob('*/*.txt', recursive=True)
 theInputFile = inputfilearray[0]
 
 # More setup variables 
+header = "Unused Field, Sequence, Barcode, Quantity, Dept/Cat, User, Price, Area,"
 isbnholder = "initial"
 isbnholder_nextline = "initial"
 default_qty = "1"
@@ -116,6 +118,8 @@ f.close()
 inputHandle = open(theInputFile)
 outputHandle = open("scoutput.txt", 'w')
 
+# Write the header to the output file
+outputHandle.write(header + "\n") 
 # Read the input file. 
 # The lines variable holds the lines from the input file
 lines = inputHandle.readlines()
