@@ -122,7 +122,7 @@ f.close()
 
 # Open both the input file (again) and the output file 
 inputHandle = open(theInputFile)
-outputHandle = open("scoutput.txt", 'w')
+outputHandle = open("scoutput.spi", 'w')
 
 # Write the header to the output file
 outputHandle.write(header + "\n") 
