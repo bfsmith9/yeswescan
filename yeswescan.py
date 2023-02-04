@@ -155,7 +155,7 @@ for line in lines:
         isbnholder = isbnholder2
         # outputHandle.write(isbnholder2 + "," + default_qty)
                 
-    if len(line) <= 4:
+    if len(line) <= 4 and last_line_flag == 0:
         # print("this one is shorter")
         isbnflag = 0
         qty = line
@@ -167,9 +167,11 @@ for line in lines:
         # print(line, end = "")
         # print("---")
 
-    if len(line) > 4 and last_line_flag > 0 and process_count == last_line_count:
-        outputHandle.write(",," + line + "," + default_qty 
+    if len(line) > 4 and last_line_flag == 1 and process_count == last_line_count:
+        outputHandle.write(",," + line.rstrip() + "," + default_qty 
         +  "," + dept + "," + user + ",,\n")
+        
+
 
 inputHandle.close()
 outputHandle.close()
