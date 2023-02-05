@@ -130,7 +130,7 @@ theOutputFileName = dept + ".spi"
 outputHandle = open(theOutputFileName, 'w')
 
 # Write the header to the output file
-outputHandle.write(header + "\n") 
+# outputHandle.write(header + "\n") 
 # Read the input file. 
 # The lines variable holds the lines from the input file
 lines = inputHandle.readlines()
