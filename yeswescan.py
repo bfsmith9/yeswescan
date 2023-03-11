@@ -53,6 +53,9 @@ Unused Field, Sequence, Barcode, Quantity, Dept/Cat, User, Price, Area,
 ## 2/2/2023
 - Changed output file name to dept name with the "spi" extension.
 
+## 3/11/2023 
+- New problem: if last line is an ISBN, it *ignores* all the indicated quantities (those that aren't '1'). It's as if it *expects* the last line to be a quantity - if not, tilt.
+
 """
 
 import os
@@ -67,7 +70,7 @@ from tkinter import simpledialog
 dept = "default_dept"
 user = "jane_doe"
 
-# GUI section
+# GUI section ----------------------------------------------------
 ROOT = tk.Tk()
 ROOT.withdraw()
 
@@ -85,7 +88,7 @@ dept = simpledialog.askstring(title="Dept",
 # check it out
 # print("Hello", dept)   
 
-# End GUI section 
+# End GUI section ----------------------------------------------------
 
 # Find the input file. It has to be in *one directory/folder* 
 # below the current one, and has to have a .txt suffix 
@@ -103,8 +106,10 @@ isbnholder_nextline = "initial"
 default_qty = "1"
 isbnflag = 0
 qtyflag = 0
-last_line_flag = 0
+last_line = "x" 
+last_line_USB_flag = 0
 last_line_count = 0
+second_linecount = 0 
 process_count = 0
 
 # Read the last line of input file. If it's an ISBN, 
@@ -119,9 +124,17 @@ with open(str(theInputFile)) as f:
     the_last_line_number = last_line_count
 
 if len(last_line) > 4:
-    last_line_flag = 1
+    last_line_USB_flag = 1
+    print("what")
+    
+if (len(last_line) <= 4 or last_line.isspace() or last_line == "" or last_line is None):
+    last_line_USB_flag = 2
+    print("whitespace found")
 
 f.close()
+
+print("last_line_USB_flag: " + str(last_line_USB_flag))
+#sys.exit() 
 
 # Open both the input file (again) and the output file 
 inputHandle = open(theInputFile)
@@ -159,8 +172,13 @@ for line in lines:
         +  "," + dept + "," + user + ",,\n")
         isbnholder = isbnholder2
         # outputHandle.write(isbnholder2 + "," + default_qty)
-                
-    if len(line) <= 4 and last_line_flag == 0:
+    
+    # This is the problem. If it's ever a USB on the last line, it'll never
+    # print the small-number-totals. My logic is faulty. Maybe I want it to 
+    # get to the *count* of the last line. That should work - both the flag
+    # and the count together. Looks like I have it - added a second <= 4 
+    # if-statement, with the case where the USB_flag *is* "1"! 
+    if len(line) <= 4 and (last_line_USB_flag == 0 or last_line_USB_flag == 2):
         # print("this one is shorter")
         isbnflag = 0
         qty = line
@@ -168,18 +186,43 @@ for line in lines:
         # print(line, end = "") 
         outputHandle.write(",," + isbnholder.rstrip() + "," + qty.rstrip() 
         +  "," + dept + "," + user + ",,\n")
+        
+    if len(line) <= 4 and (last_line_USB_flag == 1) and (second_linecount < last_line_count):
+        # print("this one is shorter")
+        isbnflag = 0
+        qty = line
+        qtyflag = 1
+        # print(line, end = "") 
+        outputHandle.write(",," + isbnholder.rstrip() + "," + qty.rstrip() 
+        +  "," + dept + "," + user + ",,\n")    
 
         # print(line, end = "")
         # print("---")
 
-    if len(line) > 4 and last_line_flag == 1 and process_count == last_line_count:
+    if len(line) > 4 and last_line_USB_flag == 1 and process_count == last_line_count:
         outputHandle.write(",," + line.rstrip() + "," + default_qty 
         +  "," + dept + "," + user + ",,\n")
         
-
+    second_linecount = second_linecount + 1
 
 inputHandle.close()
 outputHandle.close()
+
+"""
+# DEBUGGING FILE WRITES 
+with open("writingfile.txt", 'a') as outputHandle2:
+        
+
+    # If I try to write either of these two first outputs, nothing happens (???) 
+    # I'm definitely getting the last line in a variable. 
+    outputHandle2.write("last_line_USB_flag: " + str(last_line_USB_flag) + "\n")
+    outputHandle2.write("last_line_count: " + str(last_line_count) + "\n")
+    outputHandle2.write("last_line: " + last_line + "\n")
+    outputHandle2.write("This is the end.\n")
+
+outputHandle2.close()
+"""         
+
 
 # Exit program 
 # sys.exit() 
